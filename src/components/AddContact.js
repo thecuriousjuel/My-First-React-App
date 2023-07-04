@@ -10,12 +10,13 @@ class AddContact extends React.Component
     add = (e) =>
     {
         e.preventDefault();
-        if (this.state.name === "" && this.state.email === "")
+        if (this.state.name === "" || this.state.email  === "")
         {
-            alert('All fields are empty');
+            alert('Fields are empty');
             return;
         }
-        console.log(this.state.name, this.state.email)
+        this.props.addContactHandler(this.state);
+        this.setState({name:"", email:""})
     }
 
     render()
