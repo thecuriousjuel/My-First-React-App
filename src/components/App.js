@@ -4,25 +4,26 @@ import { useState, useEffect } from 'react';
 import Header from "./Header";
 import AddContact from "./AddContact";
 import ContactList from "./ContactList";
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 
 function App()
-{
+{ 
   const LOCAL_STORAGE_KEY = 'contacts';
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState( JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []);
+
   const addContactHandler = (contact) =>
   {
-    setContacts([...contacts, contact]);
+    setContacts([...contacts, {id: uuid(), ...contact}]);
     console.log("Contacts", contacts);
   }
 
   useEffect(() =>
   {
     const retrieveContacts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-    console.log("Priting from Storage ", retrieveContacts);
+    console.log("Printing from Storage ", retrieveContacts);
     if (retrieveContacts)
     {
-      setContacts(retrieveContacts);
+      setContacts([...retrieveContacts]);
     }
   }, [])
 
